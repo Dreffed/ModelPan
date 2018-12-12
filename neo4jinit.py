@@ -1,18 +1,11 @@
-from neomodel import (config, StructuredNode, StringProperty, IntegerProperty,
+from utils import load_settings, save_settings
+from neomodel import (config, StructuredRel, StructuredNode,  StringProperty, DateProperty, IntegerProperty,
     UniqueIdProperty, RelationshipTo, RelationshipFrom)
+from bpmn_model import *
 
-config.DATABASE_URL = 'bolt://neo4j:password@localhost:7687'
+neo_connect_file = "neo4j_settings.json"
 
+settings = load_settings(neo_connect_file)
+config.DATABASE_URL = settings['neo4j']['database_url']
 
-class Container(StructuredNode):
-    name = StringProperty(required=True)
-    container_type = StringProperty(require=True)
-
-    #
-
-class BPMNProcess(StructuredNode):
-    #fields
-    name = StringProperty(required=True)
-    process_type = StringProperty(required=True)
-
-    # linkages
+print(config.DATABASE_URL)
